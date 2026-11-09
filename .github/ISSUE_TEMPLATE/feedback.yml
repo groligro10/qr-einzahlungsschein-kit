@@ -1,0 +1,30 @@
+name: Feedback or bug
+description: Something was missing, or a bill did not look right.
+title: "[feedback] "
+labels: ["feedback"]
+body:
+  - type: textarea
+    id: used
+    attributes:
+      label: What did you use it for?
+      description: For example a club due, rent, or a freelance invoice. Do not include a real IBAN or a customer's address.
+    validations:
+      required: true
+  - type: textarea
+    id: missing
+    attributes:
+      label: What was missing or wrong?
+    validations:
+      required: true
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Other
+    validations:
+      required: true

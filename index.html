@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QR Einzahlungsschein Kit — QR-Rechnung im Browser</title>
+    <meta
+      name="description"
+      content="QR Einzahlungsschein Kit erstellt eine QR-Rechnung im Browser. Vier Sprachen, kein Upload. Ein Absender kann auf diesem Gerät gemerkt werden."
+    />
+    <link rel="canonical" href="https://qr-zahlteil-kit.pages.dev/" />
+    <link rel="alternate" hreflang="de" href="https://qr-zahlteil-kit.pages.dev/" />
+    <link rel="alternate" hreflang="fr" href="https://qr-zahlteil-kit.pages.dev/" />
+    <link rel="alternate" hreflang="x-default" href="https://qr-zahlteil-kit.pages.dev/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_CH" />
+    <meta property="og:locale:alternate" content="fr_CH" />
+    <meta property="og:site_name" content="QR Einzahlungsschein Kit" />
+    <meta property="og:title" content="QR Einzahlungsschein Kit — QR-Rechnung im Browser" />
+    <meta
+      property="og:description"
+      content="QR Einzahlungsschein Kit erstellt eine QR-Rechnung im Browser. Vier Sprachen, kein Upload. Ein Absender kann auf diesem Gerät gemerkt werden."
+    />
+    <meta property="og:url" content="https://qr-zahlteil-kit.pages.dev/" />
+    <meta name="theme-color" content="#f3efe6" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%239d1c1c'/%3E%3Crect x='13' y='6' width='6' height='20' fill='white'/%3E%3Crect x='6' y='13' width='20' height='6' fill='white'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main" data-i18n="nav.skip">Zum Inhalt</a>
+    <header class="top">
+      <div class="brand">
+        <span class="mark" aria-hidden="true"></span>
+        <div>
+          <h1 class="wordmark">QR Einzahlungsschein Kit</h1>
+          <p class="tagline" data-i18n="app.tagline">
+            QR-Rechnungen für Vereine, Vermieterinnen und Freischaffende. Im Browser, ohne Konto.
+          </p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <div class="langs" role="radiogroup" data-i18n-aria="aria.lang" aria-label="Sprache">
+          <button type="button" data-lang="DE" aria-pressed="true" aria-label="Deutsch">DE</button>
+          <button type="button" data-lang="FR" aria-pressed="false" aria-label="Französisch">FR</button>
+          <button type="button" data-lang="IT" aria-pressed="false" aria-label="Italienisch">IT</button>
+          <button type="button" data-lang="EN" aria-pressed="false" aria-label="Englisch">EN</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="trust">
+      <p data-i18n="app.disclaimerShort">Bitte mit dem Test Ihrer Bank prüfen.</p>
+      <ul class="badges">
+        <li data-i18n="badge.noUpload">Kein Upload</li>
+        <li data-i18n="badge.offline">Läuft offline</li>
+        <li data-i18n="badge.sps">SPS 2.3</li>
+      </ul>
+    </div>
+
+    <main id="main">
+      <section id="panel-single" role="tabpanel" aria-labelledby="mode-single">
+        <div class="layout">
+          <form id="bill-form" novalidate>
+            <div class="try-row">
+              <button type="button" id="try-example" class="button primary" data-i18n="action.tryExample">Mit Beispiel ausprobieren</button>
+              <details class="more-examples">
+                <summary data-i18n="action.moreExamples">Weitere Beispiele</summary>
+                <div class="row-actions">
+                  <button type="button" id="example-qrr" class="button ghost" data-i18n="action.exampleQrr">Beispiel QR-Referenz</button>
+                  <button type="button" id="example-scor" class="button ghost" data-i18n="action.exampleScor">Beispiel Creditor Reference</button>
+                  <button type="button" id="example-open" class="button ghost" data-i18n="action.exampleOpen">Beispiel offener Betrag</button>
+                </div>
+              </details>
+            </div>
+            <fieldset>
+              <legend data-i18n="section.creditor">Zahlungsempfänger</legend>
+              <label class="field">
+                <span data-i18n="field.name">Name</span>
+                <input id="creditor-name" name="creditor-name" autocomplete="organization" maxlength="70" required />
+              </label>
+              <div class="grid-2">
+                <label class="field">
+                  <span data-i18n="field.street">Strasse</span>
+                  <input id="creditor-street" autocomplete="address-line1" maxlength="70" required />
+                </label>
+                <label class="field">
+                  <span data-i18n="field.building">Hausnummer</span>
+                  <input id="creditor-building" maxlength="16" />
+                </label>
+              </div>
+              <div class="grid-3">
+                <label class="field">
+                  <span data-i18n="field.zip">PLZ</span>
+                  <input id="creditor-zip" autocomplete="postal-code" maxlength="16" required />
+                </label>
+                <label class="field">
+                  <span data-i18n="field.city">Ort</span>
+                  <input id="creditor-city" autocomplete="address-level2" maxlength="35" required />
+                </label>
+                <label class="field">
+                  <span data-i18n="field.country">Land</span>
+                  <input id="creditor-country" maxlength="2" value="CH" list="countries" autocomplete="country" required />
+                </label>
+              </div>
+              <label class="field">
+                <span data-i18n="field.iban">IBAN oder QR-IBAN</span>
+                <input id="creditor-account" spellcheck="false" autocapitalize="characters" autocomplete="off" maxlength="42" required />
+              </label>
+              <label class="check">
+                <input id="remember-sender" type="checkbox" />
+                <span data-i18n="field.rememberSender">Absender merken</span>
+              </label>
+              <p class="hint" data-i18n="field.rememberHint">Nur dieser eine Absender bleibt in diesem Browser. Mehrere benannte Profile sind Teil von Pro.</p>
+            </fieldset>
+
+            <fieldset>
+              <legend data-i18n="section.amount">Betrag</legend>
+              <div class="grid-2">
+                <label class="field">
+                  <span data-i18n="field.currency">Währung</span>
+                  <select id="currency">
+                    <option value="CHF">CHF</option>
+                    <option value="EUR">EUR</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span data-i18n="field.amount">Betrag</span>
+                  <input id="amount" inputmode="decimal" placeholder="0.00" />
+                </label>
+              </div>
+              <label class="check">
+                <input id="open-amount" type="checkbox" />
+                <span data-i18n="field.openAmount">Betrag offen lassen</span>
+              </label>
+            </fieldset>
+
+            <fieldset>
+              <legend data-i18n="section.debtor">Zahlungspflichtige Person</legend>
+              <label class="check">
+                <input id="debtor-enabled" type="checkbox" />
+                <span data-i18n="field.debtorEnable">Zahlungspflichtige Person einsetzen</span>
+              </label>
+              <div id="debtor-fields" hidden>
+                <label class="field">
+                  <span data-i18n="field.name">Name</span>
+                  <input id="debtor-name" autocomplete="name" maxlength="70" />
+                </label>
+                <div class="grid-2">
+                  <label class="field">
+                    <span data-i18n="field.street">Strasse</span>
+                    <input id="debtor-street" autocomplete="address-line1" maxlength="70" />
+                  </label>
+                  <label class="field">
+                    <span data-i18n="field.building">Hausnummer</span>
+                    <input id="debtor-building" maxlength="16" />
+                  </label>
+                </div>
+                <div class="grid-3">
+                  <label class="field">
+                    <span data-i18n="field.zip">PLZ</span>
+                    <input id="debtor-zip" autocomplete="postal-code" maxlength="16" />
+                  </label>
+                  <label class="field">
+                    <span data-i18n="field.city">Ort</span>
+                    <input id="debtor-city" autocomplete="address-level2" maxlength="35" />
+                  </label>
+                  <label class="field">
+                    <span data-i18n="field.country">Land</span>
+                    <input id="debtor-country" maxlength="2" value="CH" list="countries" autocomplete="country" />
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend data-i18n="section.reference">Referenz</legend>
+              <p id="reference-note" class="note" hidden></p>
+              <div class="choices" id="reference-choices" role="radiogroup" aria-describedby="reference-note">
+                <label><input type="radio" name="reference-type" value="QRR" checked /> <span data-i18n="ref.qrr">QR-Referenz</span></label>
+                <label><input type="radio" name="reference-type" value="SCOR" /> <span data-i18n="ref.scor">Creditor Reference</span></label>
+                <label><input type="radio" name="reference-type" value="NON" /> <span data-i18n="ref.non">Ohne Referenz</span></label>
+              </div>
+              <p id="reference-help" class="hint" data-i18n="ref.help.qrr"></p>
+              <div id="reference-row" class="reference-row">
+                <label class="field grow">
+                  <span data-i18n="field.reference">Referenz</span>
+                  <input id="reference" spellcheck="false" autocapitalize="characters" />
+                </label>
+                <button type="button" id="reference-complete" class="button ghost" data-i18n="ref.complete">Prüfziffer einsetzen</button>
+              </div>
+              <p id="reference-hint" class="hint"></p>
+            </fieldset>
+
+            <fieldset>
+              <legend data-i18n="section.extra">Mitteilung und Rechnungsinformation</legend>
+              <label class="field">
+                <span data-i18n="field.message">Mitteilung</span>
+                <textarea id="message" rows="2" maxlength="140"></textarea>
+              </label>
+              <label class="field">
+                <span data-i18n="field.billing">Rechnungsinformation</span>
+                <textarea id="billing" rows="2" maxlength="140" spellcheck="false"></textarea>
+              </label>
+              <p class="hint" data-i18n="hint.billing">Zum Beispiel eine Swico-Zeile. Zusammen mit der Mitteilung höchstens 140 Zeichen.</p>
+              <div class="row-actions">
+                <button type="button" id="billing-fill" class="button ghost" data-i18n="action.swico">Swico aus Rechnungsfeldern</button>
+                <p id="extra-count" class="hint count"></p>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend data-i18n="section.header">Rechnungskopf</legend>
+              <label class="check">
+                <input id="header-enabled" type="checkbox" />
+                <span data-i18n="field.headerEnable">Einfachen Rechnungskopf über dem Zahlteil drucken</span>
+              </label>
+              <p class="hint" data-i18n="hint.header">Der Kopf steht auf der A4-Seite. Der Zahlteil bleibt unten, 210 × 105 mm.</p>
+              <div id="header-fields" hidden>
+                <div class="grid-2">
+                  <label class="field">
+                    <span data-i18n="field.invoiceTitle">Titel</span>
+                    <input id="invoice-title" data-i18n-placeholder="field.invoiceTitlePh" placeholder="Rechnung" />
+                  </label>
+                  <label class="field">
+                    <span data-i18n="field.invoiceNumber">Rechnungsnummer</span>
+                    <input id="invoice-number" />
+                  </label>
+                </div>
+                <div class="grid-2">
+                  <label class="field">
+                    <span data-i18n="field.invoiceDate">Rechnungsdatum</span>
+                    <input id="invoice-date" type="date" />
+                  </label>
+                  <label class="field">
+                    <span data-i18n="field.dueDate">Zahlbar bis</span>
+                    <input id="due-date" type="date" />
+                  </label>
+                </div>
+                <label class="field">
+                  <span data-i18n="field.intro">Einleitung</span>
+                  <textarea id="intro" rows="2" maxlength="400"></textarea>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend data-i18n="field.billLanguage">Sprache auf dem Zahlteil</legend>
+              <label class="field">
+                <span data-i18n="field.billLanguage">Sprache auf dem Zahlteil</span>
+                <select id="bill-language">
+                  <option value="DE">Deutsch</option>
+                  <option value="FR">Français</option>
+                  <option value="IT">Italiano</option>
+                  <option value="EN">English</option>
+                </select>
+              </label>
+            </fieldset>
+
+            <ul id="issues" class="issues" tabindex="-1" aria-live="polite"></ul>
+            <p id="status" class="status" role="status"></p>
+            <div class="downloads">
+              <button type="button" id="download-a4" class="button primary" data-i18n="action.downloadA4">A4-PDF herunterladen</button>
+              <button type="button" id="download-slip" class="button" data-i18n="action.downloadSlip">Nur Zahlteil herunterladen</button>
+              <button type="button" id="clear-form" class="button ghost" data-i18n="action.clear">Leeren</button>
+            </div>
+          </form>
+
+          <aside class="preview-panel">
+            <h2 data-i18n="section.preview">Vorschau des Zahlteils</h2>
+            <p id="preview-status" class="hint" data-i18n="preview.sampleHint">
+              Graues Beispiel, nicht Ihre Rechnung. Die eigene Vorschau erscheint, sobald die Angaben gültig sind.
+            </p>
+            <div id="preview-frame">
+              <div id="preview" class="preview-sheet"></div>
+            </div>
+            <p class="hint" data-i18n="preview.scale">Zahlteil im Massstab 210 × 105 mm, QR-Code 46 × 46 mm.</p>
+          </aside>
+        </div>
+      </section>
+
+      </main>
+
+    <footer>
+      
+      <p data-i18n="app.notAffiliated">Nicht mit SIX verbunden.</p>
+      <p data-i18n="app.independent">Unabhängiges Werkzeug. Keine Verbindung zu einer Bank oder einer Normungsstelle.</p>
+      <p data-i18n="app.privacy">Alle Rechnungen entstehen in Ihrem Browser; es wird nichts hochgeladen.</p>
+      <p data-i18n="footer.stack">Läuft vollständig in diesem Browser.</p>
+      <p><button type="button" id="open-licenses" class="text-button" data-i18n="footer.licenses">Lizenzen</button></p>
+      <p><a id="feedback-link" data-i18n="footer.feedback" href="https://forms.gle/vx1onjngBso7M5UC9" target="_blank" rel="noopener noreferrer">Feedback</a></p>
+    </footer>
+    <dialog id="licenses-dialog">
+      <h2 id="licenses-heading" data-i18n="licenses.title">Lizenzen</h2>
+      <pre id="licenses-body"></pre>
+      <button type="button" id="licenses-close" class="button" data-i18n="licenses.close">Schliessen</button>
+    </dialog>
+    <div id="toast" class="toast" hidden role="status">
+      <span data-i18n="toast.cleared">Angaben geleert.</span>
+      <button type="button" id="toast-undo" class="button" data-i18n="action.undo">Rückgängig</button>
+    </div>
+
+    <datalist id="countries">
+      <option value="CH"></option>
+      <option value="LI"></option>
+      <option value="DE"></option>
+      <option value="FR"></option>
+      <option value="IT"></option>
+      <option value="AT"></option>
+    </datalist>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

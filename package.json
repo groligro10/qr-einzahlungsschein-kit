@@ -1,0 +1,26 @@
+{
+  "name": "qr-einzahlungsschein-kit",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Free client-side Swiss QR-bill generator. One bill at a time, in the browser.",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 43123 --strictPort",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 43123 --strictPort",
+    "test": "vitest run"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "pdfkit": "^0.17.2",
+    "swissqrbill": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/pdfkit": "^0.17.3",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12",
+    "vite-plugin-singlefile": "^2.3.0",
+    "vitest": "^3.2.4"
+  }
+}
